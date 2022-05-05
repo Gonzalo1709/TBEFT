@@ -1,4 +1,8 @@
 #Installing pip packages
+import sys
+import subprocess
+import pkg_resources
+
 required = {'myconfig'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
@@ -9,9 +13,6 @@ if missing:
     python = sys.executable
     subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
 
-import sys
-import subprocess
-import pkg_resources
 from os.path import exists as file_exists
 
 #Create starting game variables
