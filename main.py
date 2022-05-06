@@ -15,18 +15,14 @@ if missing:
 
 from os.path import exists as file_exists
 
-#Create starting game variables
 
+#Read previous data and assign variables
+#Check for previous save file.
+if file_exists("data.py") == True:
+    print("Save file found, loading game data...")
+    from data import *
 
-while True:
-    #Read previous data and assign variables
-    
-    #Check for previous save file.
-    if file_exists("saves.txt") == True:
-        pass
-        #with open("saves.txt", 'r') as reader:
+elif file_exists("data.py") == False:
+    print("Save file not found, initializing fresh save.")
+    #when finished, create template for new save.
 
-    elif file_exists("saves.txt") == False:
-        print("Save file not found, initializing fresh save.")
-        
-    #Hideout
