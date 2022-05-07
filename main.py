@@ -2,6 +2,10 @@
 import sys
 import subprocess
 import pkg_resources
+from armors import *
+from guns import *
+
+import fighting
 
 required = {'myconfig'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
@@ -15,14 +19,24 @@ if missing:
 
 from os.path import exists as file_exists
 
-
 #Read previous data and assign variables
 #Check for previous save file.
 if file_exists("data.py") == True:
     print("Save file found, loading game data...")
     from data import *
+    #save files not yet implemented
 
 elif file_exists("data.py") == False:
     print("Save file not found, initializing fresh save.")
     #when finished, create template for new save.
 
+stash = {
+    "Roubles": 500000,
+    "USD": 1000,
+    "EUR": 500,
+    paca: 1,
+    mp5: 1    
+}
+print("--------------------")
+print("Escape from Lince")
+print("")
