@@ -1,4 +1,4 @@
-#Imports for packages, when bundled as aplication this is deletable
+#Imports for packages. When bundled as aplication this wont be equired
 import sys
 import subprocess
 import pkg_resources
@@ -40,4 +40,4 @@ stash = {
     mp5: 1    
 }
 
-fight(PMC(50), "mefirst")
+fight(Scav(), "mefirst")

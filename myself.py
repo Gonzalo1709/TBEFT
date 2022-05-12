@@ -5,4 +5,4 @@ inv = {
     "gun": mp5,
 }
 
-myhealth = StandardHealth
+myhealth = StandardHealth()
