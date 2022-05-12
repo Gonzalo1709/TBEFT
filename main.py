@@ -2,6 +2,8 @@
 import sys
 import subprocess
 import pkg_resources
+import time
+from threading import Event
 
 required = {'myconfig'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
@@ -18,6 +20,9 @@ from enemies import *
 from guns import *
 from fighting import fight
 from myself import *
+import os
+
+clear = lambda: os.system("cls")
 
 from os.path import exists as file_exists
 
@@ -39,5 +44,9 @@ stash = {
     paca: 1,
     mp5: 1    
 }
+
+
+
+clear()
 
 fight(Scav(), "mefirst")

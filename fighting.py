@@ -1,7 +1,13 @@
 from enemies import *
 from myself import inv, myhealth
+from threading import Event
+import time
+
+exit = Event()
 
 def fight(enemy, kindofencounter):
+
+    from main import clear
 
 
     print(f"Battle with {type(enemy).__name__} has begun!")
@@ -13,9 +19,23 @@ def fight(enemy, kindofencounter):
         print("They saw you first. It's their turn!")
         turn = "them"
 
-    tofire = int(inv["gun"].rof/100)
+
 
     while myhealth.head > 0 and myhealth.thorax > 0 and enemy.health.head > 0 and enemy.health.thorax > 0:
-
-        pass
-        #remove pass when working, its in there to stop getting an error for empty while loop.
+        aimpoint = 0
+        tofire = int(inv["gun"].rof/100)
+        lap = "-" * aimpoint
+        rap = "-"*(20-aimpoint)
+        while not exit.is_set():
+            while aimpoint < 20:
+                lap = "-" * aimpoint
+                rap = "-" * aimpoint
+                print(lap, "×", rap, end="\r")
+                aimpoint += 1
+                time.sleep(0.2)
+            while aimpoint > 0:
+                lap = "-" * aimpoint
+                rap = "-" * aimpoint
+                print(lap, "×", rap, end="\r")
+                aimpoint -= 1
+                time.sleep(0.2)

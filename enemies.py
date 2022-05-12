@@ -23,6 +23,7 @@ class StandardHealth:
 
     def getoverall(self):
         self.overall = self.head + self.thorax + self.rArm + self.lArm + self.stomach + self.rLeg + self.lLeg
+        return(self.overall)
 
     def dealdamage(self, bodypart, damage):
         damagetodeal = damage
