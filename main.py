@@ -3,7 +3,6 @@ import sys
 import subprocess
 import pkg_resources
 import time
-from threading import Event
 
 required = {'myconfig'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
@@ -44,8 +43,6 @@ stash = {
     paca: 1,
     mp5: 1    
 }
-
-
 
 clear()
 

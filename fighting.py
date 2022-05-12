@@ -1,9 +1,7 @@
 from enemies import *
 from myself import inv, myhealth
-from threading import Event
 import time
 
-exit = Event()
 
 def fight(enemy, kindofencounter):
 
@@ -26,16 +24,54 @@ def fight(enemy, kindofencounter):
         tofire = int(inv["gun"].rof/100)
         lap = "-" * aimpoint
         rap = "-"*(20-aimpoint)
-        while not exit.is_set():
-            while aimpoint < 20:
-                lap = "-" * aimpoint
-                rap = "-" * aimpoint
-                print(lap, "×", rap, end="\r")
-                aimpoint += 1
-                time.sleep(0.2)
-            while aimpoint > 0:
-                lap = "-" * aimpoint
-                rap = "-" * aimpoint
-                print(lap, "×", rap, end="\r")
-                aimpoint -= 1
-                time.sleep(0.2)
+        print("         v            Fire with Ctrl+C", end="\n")
+        print("--------------------", end="\r")
+        speedofcursor = 0.3-(tofire/40)
+        direction = True
+        hits = 0
+        while tofire > 0:
+            try:
+                while True:
+                    if direction == True:
+                        direction2 = False
+                        while True:
+                            if aimpoint == 20 or aimpoint == 0:
+                                direction2 = not direction2
+                            if direction2 == True:
+                                aimpoint += 1
+                            else:
+                                aimpoint -= 1
+                            lap = "-" * aimpoint
+                            rap = "-" * (20-aimpoint)
+                            fullaim = lap + "×" + rap + " On point: " + str(hits) + " Left: " + str(tofire)
+                            print(fullaim, end="\r")
+                            time.sleep(speedofcursor)
+                    else:
+                        direction2 = True
+                        while True:
+                            if aimpoint == 20 or aimpoint == 0:
+                                direction2 = not direction2
+                            if direction2 == True:
+                                aimpoint += 1
+                            else:
+                                aimpoint -= 1
+                            lap = "-" * aimpoint
+                            rap = "-" * (20-aimpoint)
+                            fullaim = lap + "×" + rap + " On point: " + str(hits) + " Left: " + str(tofire)
+                            print(fullaim, end="\r")
+                            time.sleep(speedofcursor)
+
+            except KeyboardInterrupt:
+                if aimpoint == 10 or aimpoint == 9 or aimpoint == 11:
+                    hits += 1
+                tofire -= 1
+                direction = not direction
+                if direction == True:
+                    aimpoint = 0
+                else:
+                    aimpoint = 20
+                pass
+        fullaim = lap + "×" + rap + " On point: " + str(hits) + " Left: " + str(tofire) + "" + str(aimpoint)
+        print(fullaim, end="\r")
+        print("")
+        print(f"You shot {hits} shots on point!")
