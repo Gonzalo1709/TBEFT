@@ -1,11 +1,7 @@
-#Installing pip packages
+#Imports for packages, when bundled as aplication this is deletable
 import sys
 import subprocess
 import pkg_resources
-from armors import *
-from guns import *
-
-import fighting
 
 required = {'myconfig'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
@@ -16,6 +12,12 @@ if missing:
     print("If this fails, check pip is installed and updated.")
     python = sys.executable
     subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
+
+from armors import *
+from enemies import *
+from guns import *
+from fighting import fight
+from inventory import *
 
 from os.path import exists as file_exists
 
@@ -37,6 +39,6 @@ stash = {
     paca: 1,
     mp5: 1    
 }
-print("--------------------")
-print("Escape from Lince")
-print("")
+
+
+fight(PMC(50))
