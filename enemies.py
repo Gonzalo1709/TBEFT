@@ -1,12 +1,5 @@
 import random
 
-class PMC:
-    def __init__(self, level):
-        self.level = level
-        self.accmodpos = int(level/2)
-        self.accmodneg =  int(level/2) - 12
-        # First attempt to accuracy = round(random.randint(-(51-level),51-round(level/3, 0)) * 0.01 + 0.50, 2)
-
 class StandardHealth:
     head = 35
     thorax = 85
@@ -17,7 +10,17 @@ class StandardHealth:
     lLeg = 65
     overall = head+thorax+rArm+lArm+stomach+rLeg+lLeg
 
+class PMC:
+    def __init__(self, level):
+        self.level = level
+        self.accmodpos = int(level/2)
+        self.accmodneg =  int(level/2) - 12
+        self.health = StandardHealth
+        # First attempt to accuracy = round(random.randint(-(51-level),51-round(level/3, 0)) * 0.01 + 0.50, 2)
+
+
 class Scav:
     def __init__(self):
         self.accmodpos = random.randint(-50, 0)
         self.accmodneg = self.accmodpos - random.randint(0, 50)
+        self.health = StandardHealth

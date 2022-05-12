@@ -17,14 +17,14 @@ from armors import *
 from enemies import *
 from guns import *
 from fighting import fight
-from inventory import *
+from myself import *
 
 from os.path import exists as file_exists
 
 #Read previous data and assign variables
 #Check for previous save file.
 if file_exists("data.py") == True:
-    print("Save file found, loading game data...")
+    #print("Save file found, loading game data...")
     from data import *
     #save files not yet implemented
 
@@ -40,5 +40,4 @@ stash = {
     mp5: 1    
 }
 
-
-fight(PMC(50))
+fight(PMC(50), "mefirst")
