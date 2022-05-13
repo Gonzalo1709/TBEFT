@@ -4,7 +4,7 @@ import subprocess
 import pkg_resources
 import time
 
-required = {'myconfig'}
+required = {'pyinstaller'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 

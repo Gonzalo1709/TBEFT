@@ -70,6 +70,7 @@ def fight(enemy, kindofencounter):
                 else:
                     aimpoint = 19
                 pass
+
         fullaim = lap + "×" + rap + " On point: " + str(hits) + " Close: " + str(close) + " Left: " + str(tofire)
         print(fullaim, end="\r")
         print("")
@@ -77,4 +78,19 @@ def fight(enemy, kindofencounter):
         return(hits, close)
 
     while myhealth.head > 0 and myhealth.thorax > 0 and enemy.health.head > 0 and enemy.health.thorax > 0:
-        print()
+        if turn == "me":
+            print("--------------------")
+            print("--Your turn begins--")
+            print("--Choose an option--")
+            print("--------------------")
+            print("-1. Fire (end turn)-")
+            print("-2. Action         -")
+            print("-3. Inventory      -")
+            print("-4. Attempt to flee-")
+            print("--------------------")
+
+            choice = int(input("Input choice (1-4): "))
+
+            if choice == 1:
+                firingsequence()
+                #deal damage
