@@ -18,7 +18,9 @@ class StandardHealth:
             "lArm": 0.7,
             "lLeg": 1.0,
             "rLeg": 1.0,
-            "stomach": 1.5
+            "stomach": 1.5,
+            "head": 1,
+            "thorax": 1
         }
 
     def getoverall(self):
