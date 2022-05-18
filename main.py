@@ -15,7 +15,7 @@ if missing:
     subprocess.check_call([python, '-m', 'pip', 'install', *missing], stdout=subprocess.DEVNULL)
 
 from armors import *
-from enemies import *
+from enemies import Scav, PMC
 from guns import *
 from fighting import fight
 from myself import *

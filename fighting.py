@@ -5,19 +5,7 @@ import random
 from armors import *
 from guns import *
 
-def calc_pen_chance(gun, armor):
-    d = armor.durability / armor.maxDur * 100
-    c = armor.aclass
-    n = gun.pen
-    a = (121-5000/(45+d*2))*c*10*0.01
-    chance1 = (0.4*(a-n-15)**2)/100
-    chance2 = (100+n/(0.9*a-n))/100
-    if a-15 < n < a:
-        return(chance1)
-    elif a <= n:
-        return(chance2)
-    else:
-        return(0)
+
 
 def fight(enemy, kindofencounter):
 
@@ -202,6 +190,9 @@ def fight(enemy, kindofencounter):
 
     while myself.health.head > 0 and myself.health.thorax > 0 and enemy.health.head > 0 and enemy.health.thorax > 0:
         if turn == "me":
+            print("-Your enemy seems  -")
+            print("-to be wearing:    -")
+            print(f"{enemy.health.equiped_armor.name}")
             print("--------------------")
             print("--Your turn begins--")
             print("--Choose an option--")
@@ -224,7 +215,7 @@ def fight(enemy, kindofencounter):
                 damage_to_deal = firingsequence(aimzone)
                 for key in damage_to_deal:
                     for i in range(damage_to_deal[key]):
-                        enemy.health.dealdamage(key, int(inv["gun"].damage))
+                        enemy.health.dealdamage(key, inv["gun"], enemy.health.equiped_armor)
                 turn = "them"
 
             if choice == 2:
