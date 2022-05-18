@@ -23,17 +23,17 @@ import os
 
 clear = lambda: os.system("cls")
 
-from os.path import exists as file_exists
+#from os.path import exists as file_exists
 
 #Read previous data and assign variables
 #Check for previous save file.
-if file_exists("data.py") == True:
+#if file_exists("data.py") == True:
     #print("Save file found, loading game data...")
-    from data import *
+    #pass
     #save files not yet implemented
 
-elif file_exists("data.py") == False:
-    print("Save file not found, initializing fresh save.")
+#elif file_exists("data.py") == False:
+    #print("Save file not found, initializing fresh save.")
     #when finished, create template for new save.
 
 stash = {
