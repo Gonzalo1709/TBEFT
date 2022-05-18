@@ -1,13 +1,27 @@
-from enemies import *
+from enemies import PMC, Scav, StandardHealth
 from myself import inv, myself
 import time
 import random
+from armors import *
+from guns import *
 
+def calc_pen_chance(gun, armor):
+    d = armor.durability / armor.maxDur * 100
+    c = armor.aclass
+    n = gun.pen
+    a = (121-5000/(45+d*2))*c*10*0.01
+    chance1 = (0.4*(a-n-15)**2)/100
+    chance2 = (100+n/(0.9*a-n))/100
+    if a-15 < n < a:
+        return(chance1)
+    elif a <= n:
+        return(chance2)
+    else:
+        return(0)
 
 def fight(enemy, kindofencounter):
 
     from main import clear
-
 
     print(f"Battle with {type(enemy).__name__} has begun!")
 
@@ -211,3 +225,12 @@ def fight(enemy, kindofencounter):
                 for key in damage_to_deal:
                     for i in range(damage_to_deal[key]):
                         enemy.health.dealdamage(key, int(inv["gun"].damage))
+                turn = "them"
+
+            if choice == 2:
+                print("--------------------")
+                print("Action to do:      -")
+                print("-1. Reposition     -")
+                print("-2. Hold angle     -")
+                print("--------------------")
+                action = int(input("Input choice (1-2): "))

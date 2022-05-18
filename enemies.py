@@ -1,6 +1,7 @@
 from inspect import Attribute, getattr_static, getmembers
 import random
 from types import MethodDescriptorType
+from armors import active_armor
 
 class StandardHealth:
     def __init__(self):
@@ -56,16 +57,23 @@ class StandardHealth:
                             else:
                                 setattr(self, limb, 0)
 
+
 class PMC:
     def __init__(self, level):
         self.level = level
         self.accmodpos = int(level/2)
         self.accmodneg =  int(level/2) - 12
         self.health = StandardHealth()
+    def equip_armor(self, type, durability):
+        self.equiped_armor = active_armor(type, durability)
         # First attempt to accuracy = round(random.randint(-(51-level),51-round(level/3, 0)) * 0.01 + 0.50, 2)
 
 
 class Scav:
+    scav_armors_type = ["paca", "zhuk", "thor"]
+    scav_armors_durability = random.randint(50, 100)
+    def equip_armor(self, type, durability):
+        self.equiped_armor = active_armor(type, durability)
     def __init__(self):
         self.accmodpos = random.randint(-50, 0)
         self.accmodneg = self.accmodpos - random.randint(0, 50)
