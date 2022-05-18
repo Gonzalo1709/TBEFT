@@ -26,13 +26,7 @@ def fight(enemy, kindofencounter):
         else:
             bodypart = random.randint(5, 6)
         aimpoint = 0
-        head = 0
-        thorax = 0
-        rArm = 0
-        lArm = 0
-        stomach = 0
-        lLeg = 0
-        rLeg = 0
+        damage_to_deal = []
         deviation = int(inv["gun"].effrecoil)
         tofire = int(inv["gun"].rof/100)
         print("         v           Fire with Ctrl+C", end="\n")
@@ -143,30 +137,30 @@ def fight(enemy, kindofencounter):
 
             if checkforhit > 0:
                 if bodypart == 1:
-                    head += 1
+                    damage_to_deal.append("head")
                     print("hit the head!")
                     bodypart += round(random.uniform(-1, 1)+deviation, 0)
                 elif bodypart >= 2 and bodypart <= 4:
                     if random.randint(0, 2) == 0:
-                        thorax += 1
+                        damage_to_deal.append("thorax")
                         print("hit the thorax.")
                     elif round(random.random(), 0) == 0:
-                        rArm += 1
+                        damage_to_deal.append("rArm")
                         print("hit the right arm.")
                     else:
-                        lArm += 1
+                        damage_to_deal.append("lArm")
                         print("hit the left arm.")
                     bodypart += round(random.uniform(-1, 1)+deviation, 0)
                 elif bodypart == 5:
-                    stomach += 1
+                    damage_to_deal.append("stomach")
                     print("hit the stomach.")
                     bodypart += round(random.uniform(-1, 1)+deviation, 0)
                 elif bodypart >= 6 and bodypart <= 7:
                     if round(random.random(), 0) == 1:
                         print("hit the right leg.")
-                        rLeg += 1
+                        damage_to_deal.append("rLeg")
                     else:
-                        lLeg +=1
+                        damage_to_deal.append("lLeg")
                         print("hit the left leg.")
                     bodypart += round(random.uniform(-1, 1)+deviation, 0)
                 else:
@@ -178,14 +172,6 @@ def fight(enemy, kindofencounter):
             else:
                 print("missed!")
             shot += 1
-            damage_to_deal = {}
-            damage_to_deal["head"] = head
-            damage_to_deal["thorax"] = thorax
-            damage_to_deal["rArm"] = rArm
-            damage_to_deal["lArm"] = lArm
-            damage_to_deal["stomach"] = stomach
-            damage_to_deal["rLeg"] = rLeg
-            damage_to_deal["lLeg"] = lLeg
         return(damage_to_deal)
 
     while myself.health.head > 0 and myself.health.thorax > 0 and enemy.health.head > 0 and enemy.health.thorax > 0:
@@ -213,10 +199,9 @@ def fight(enemy, kindofencounter):
                 print("--------------------")
                 aimzone = int(input("Input choice (1-2): "))
                 damage_to_deal = firingsequence(aimzone)
-                for key in damage_to_deal:
-                    for i in range(damage_to_deal[key]):
-                        enemy.health.dealdamage(key, inv["gun"], enemy.health.equiped_armor)
-                turn = "them"
+                for i in damage_to_deal:
+                    enemy.health.dealdamage(i, inv["gun"], enemy.health.equiped_armor)
+                turn = "me"
 
             if choice == 2:
                 print("--------------------")
