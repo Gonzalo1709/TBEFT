@@ -55,6 +55,7 @@ class StandardHealth:
 
     def dealdamage(self, bodypart, gun_shot_from, armor=False,):
         damagetodeal = gun_shot_from.damage
+        original_damage = gun_shot_from.damage
         penetration = gun_shot_from.pen
 
         for i in self.__dict__.keys():
@@ -67,15 +68,23 @@ class StandardHealth:
                     pass
 
                 else:
-                    if armor != False:
+                    pen_event = False
+                    armor_damage = False
+                    if armor != False and self.equiped_armor.name != "Nothing":
                         if bodypart in armor.protects:
+                            armor_damage = True
                             pen_check = random.random()
                             pen_chance = calc_pen_chance(penetration, self.equiped_armor)
                             if pen_check >= 1-pen_chance:
-                                damagetodeal *= 1-pen_chance
-                                damagetodeal = int(round(damagetodeal, 0))
+                                if pen_chance * 0.90 > 0.70:
+                                    damagetodeal *= pen_chance*0.90
+                                    damagetodeal = int(round(damagetodeal, 0))
+                                else:
+                                    damagetodeal *= 0.70
+                                    damagetodeal = int(round(damagetodeal, 0))
+                                pen_event = True
                             else:
-                                damagetodeal = int(round(damagetodeal*0.2, 0))
+                                damagetodeal = int(round(damagetodeal*0.1, 0))
 
                     if getattr(self, i)-damagetodeal > 0:
                         setattr(self, i, getattr(self, i)-damagetodeal)
@@ -96,6 +105,14 @@ class StandardHealth:
                                 setattr(self, limb, getattr(self, limb)-damageperlimb)
                             else:
                                 setattr(self, limb, 0)
+                    
+                    if armor_damage == True:
+                        if pen_event == True:
+                            self.equiped_armor.durability -=  original_damage * self.equiped_armor.destructibility *  0.88 * pen_chance * gun_shot_from.armor_damage
+                        else:
+                            self.equiped_armor.durability -=  original_damage * self.equiped_armor.destructibility * pen_chance * gun_shot_from.armor_damage
+                        if self.equiped_armor.durability < 0:
+                            self.equiped_armor.durability = 0
 
 
 class PMC:
@@ -112,10 +129,10 @@ class PMC:
 
 
 class Scav:
-    scav_armors_type = ["paca", "zhuk", "thor"]
+    scav_armors_type = ["paca", "zhuk", "thor", "nothing"]
     scav_armors_durability = random.randint(50, 100)
     def __init__(self):
         self.accmodpos = random.randint(-50, 0)
         self.accmodneg = self.accmodpos - random.randint(0, 50)
         self.health = StandardHealth()
-        self.health.equip_armor(self.scav_armors_type[random.randint(0,2)], self.scav_armors_durability)
+        self.health.equip_armor(self.scav_armors_type[random.randint(0, len(self.scav_armors_type)-1)], self.scav_armors_durability)

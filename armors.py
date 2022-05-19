@@ -14,12 +14,26 @@ class active_armor:
                     self.slots = obj.slots
                     self.protects = obj.protects
 
+                    self.material = obj.material
+                    material_destructibility = {
+                        "aramid": 0.25,
+                        "uhmwpe": 0.45,
+                        "combined materials": 0.5,
+                        "titan": 0.55,
+                        "aluminium": 0.6,
+                        "armor steel": 0.7,
+                        "ceramic": 0.8,
+                        "glass": 0.8
+                        }
+                    self.destructibility = material_destructibility[self.material]
+
 class paca:
     aclass = 2
     maxDur = 50
     displayName = "PACA Soft Armor"
     slots = 9
     protects = ["thorax", "stomach"]
+    material = "aramid"
 
 class zhuk:
     aclass = 3
@@ -27,6 +41,7 @@ class zhuk:
     displayName = 'BNTI "Zhuk-3" body armor (Press)'
     slots = 9
     protects = ["thorax", "stomach"]
+    material = "uhmwpe"
 
 class trooper:
     aclass = 4
@@ -34,6 +49,7 @@ class trooper:
     displayName = 'HighCom Trooper TFO body armor (Multicam)'
     slots = 9
     protects = ["thorax", "stomach"]
+    material = "uhmwpe"
 
 class thor:
     aclass = 4
@@ -41,6 +57,7 @@ class thor:
     displayName = 'NFM THOR Concealable Reinforced Vest body armor'
     slots = 9
     protects = ["thorax", "stomach"]
+    material = "combined materials"
 
 class korund:
     aclass = 5
@@ -48,6 +65,7 @@ class korund:
     displayName = 'NPP KlASS "Korund-VM" body armor'
     slots = 12
     protects = ["thorax", "stomach"]
+    material = "armor steel"
 
 class gzhel:
     aclass = 5
@@ -55,6 +73,7 @@ class gzhel:
     displayName = 'BNTI "Gzhel-K" body armor'
     slots = 9
     protects = ["thorax", "stomach"]
+    material = "ceramic"
 
 class zhuk6:
     aclass = 6
@@ -62,3 +81,12 @@ class zhuk6:
     displayName = 'BNTI "Zhuk-6a" body armor'
     slots = 9
     protects = ["thorax", "stomach"]
+    material = "ceramic"
+
+class nothing:
+    aclass = 0
+    maxDur = 0
+    displayName = "Nothing"
+    slots = 0
+    protects = []
+    material = "glass"

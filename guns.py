@@ -10,3 +10,4 @@ class mp5:
     pen = 20
     magsize = 30
     slots = 8
+    armor_damage = 0.33

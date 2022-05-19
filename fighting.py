@@ -176,8 +176,8 @@ def fight(enemy, kindofencounter):
 
     while myself.health.head > 0 and myself.health.thorax > 0 and enemy.health.head > 0 and enemy.health.thorax > 0:
         if turn == "me":
-            print("-Your enemy seems  -")
-            print("-to be wearing:    -")
+            print("")
+            print("Your enemy seems to be wearing:")
             print(f"{enemy.health.equiped_armor.name}")
             print("--------------------")
             print("--Your turn begins--")
@@ -199,7 +199,7 @@ def fight(enemy, kindofencounter):
                 print("--------------------")
                 aimzone = int(input("Input choice (1-2): "))
                 damage_to_deal = firingsequence(aimzone)
-                for i in damage_to_deal:
+                for i in damage_to_deal:          
                     enemy.health.dealdamage(i, inv["gun"], enemy.health.equiped_armor)
                 turn = "me"
 
