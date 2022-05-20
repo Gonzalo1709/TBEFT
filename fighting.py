@@ -201,7 +201,9 @@ def fight(enemy, kindofencounter):
                 damage_to_deal = firingsequence(aimzone)
                 for i in damage_to_deal:          
                     enemy.health.dealdamage(i, inv["gun"], enemy.health.equiped_armor)
-                turn = "me"
+                enemy.health.end_of_round()
+                myself.health.end_of_round()
+                turn = "them"
 
             if choice == 2:
                 print("--------------------")

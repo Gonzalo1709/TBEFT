@@ -42,6 +42,8 @@ class StandardHealth:
 
         self.equiped_armor = False
         self.equiped_gun = False
+        self.status_effects = []
+        self.is_player = False
 
     def equip_armor(self, type, durability):
         self.equiped_armor = active_armor(type, durability)
@@ -60,7 +62,7 @@ class StandardHealth:
 
         for i in self.__dict__.keys():
 
-            invalid_attributes = ["overall", "multipliers", "equiped_gun", "equiped_armor"]
+            invalid_attributes = ["overall", "multipliers", "equiped_gun", "equiped_armor", "status_effects", "is_player"]
             if i.startswith("__") or i in invalid_attributes:
                 pass
             else:
@@ -114,6 +116,44 @@ class StandardHealth:
                         if self.equiped_armor.durability < 0:
                             self.equiped_armor.durability = 0
 
+    def get_alive_limbs(self):
+        invalid_attributes = ["overall", "multipliers", "equiped_gun", "equiped_armor", "status_effects", "is_player"]
+        alive_limbs = []
+        for i in self.__dict__.keys():
+            if i.startswith("__") or i in invalid_attributes:
+                pass
+            elif getattr(self, i) > 0:
+                alive_limbs.append(i)
+        return(alive_limbs)
+    
+    def heavy_bleed(self):
+        alive_limbs = self.get_alive_limbs()
+        damage_per_limb = random.randint(3, 4)
+        for limb in alive_limbs:
+            if getattr(self, limb) - damage_per_limb > 0:
+                setattr(self, limb, getattr(self, limb)-damage_per_limb)
+            else:
+                setattr(self, limb, 0)
+
+    def light_bleed(self):
+        alive_limbs = self.get_alive_limbs()
+        damage_per_limb = random.randint(1, 3)
+        for limb in alive_limbs:
+            if getattr(self, limb) - damage_per_limb > 0:
+                setattr(self, limb, getattr(self, limb)-damage_per_limb)
+            else:
+                setattr(self, limb, 0)
+
+    def end_of_round(self):
+        for i in self.status_effects:
+            if i == "heavy_bleed":
+                self.heavy_bleed()
+                if self.is_player == True:
+                    print("You have an untreated heavy bleed!")
+            elif i == "light_bleed":
+                self.light_bleed()
+                if self.is_player == True:
+                    print("You have an untreated light bleed!")
 
 class PMC:
     def __init__(self, level, myself=False):
