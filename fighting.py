@@ -178,7 +178,7 @@ def fight(enemy, kindofencounter):
         if turn == "me":
             print("")
             print("Your enemy seems to be wearing:")
-            print(f"{enemy.health.equiped_armor.name}")
+            print(f"{enemy.health.equiped_armor.name} ({enemy.health.equiped_armor.durability}/{enemy.health.equiped_armor.maxDur})")
             print("--------------------")
             print("--Your turn begins--")
             print("--Choose an option--")
