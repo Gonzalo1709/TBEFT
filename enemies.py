@@ -1,5 +1,6 @@
 from inspect import Attribute, getattr_static, getmembers
 import random
+from tarfile import _Bz2ReadableFileobj
 from types import MethodDescriptorType
 from armors import *
 from guns import *
@@ -95,12 +96,7 @@ class StandardHealth:
                         setattr(self, i, 0)
                         damagetodeal -= getattr(self, i)
                         damagetodeal *= self.multipliers[i]
-                        alivelimbs = []
-                        for i in self.__dict__.keys():
-                            if i.startswith("__") or i in invalid_attributes:
-                                pass
-                            elif getattr(self, i) > 0:
-                                alivelimbs.append(i)
+                        alivelimbs = self.get_alive_limbs()
                         damageperlimb = int(damagetodeal/len(alivelimbs))
                         for limb in alivelimbs:
                             if getattr(self, limb) - damageperlimb > 0:
@@ -150,10 +146,28 @@ class StandardHealth:
                 self.heavy_bleed()
                 if self.is_player == True:
                     print("You have an untreated heavy bleed!")
+                else:
+                    print("Your enemy left behind a blood trail.")
             elif i == "light_bleed":
                 self.light_bleed()
                 if self.is_player == True:
                     print("You have an untreated light bleed!")
+                else:
+                    print("Your enemy left behind a blood trail.")
+    
+    def use_esmarch(self):
+        completed = False
+        for index, item in enumerate(self.status_effects):
+            if completed == False and item == "heavy_bleed":
+                self.status_effects.pop(index)
+                completed = True
+
+    def use_bandage(self):
+        completed = False
+        for index, item in enumerate(self.status_effects):
+            if completed == False and item == "light_bleed":
+                self.status_effects.pop(index)
+                completed = True
 
 class PMC:
     def __init__(self, level, myself=False):
