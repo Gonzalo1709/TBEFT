@@ -7,8 +7,6 @@ class esmarch:
     type = "one time"
     def use(self):
         self.uses -= 1
-        if self.uses <= 0:
-            del self
     slots = 1
 
 class calok_b:
@@ -20,8 +18,6 @@ class calok_b:
     type = "one time"
     def use(self):
         self.uses -= 1
-        if self.uses <= 0:
-            del self
     slots = 1
 
 class bandage:
@@ -33,8 +29,6 @@ class bandage:
     type = "one time"
     def use(self):
         self.uses -= 1
-        if self.uses <= 0:
-            del self
     slots = 1
 
 class army_bandage:
@@ -46,8 +40,6 @@ class army_bandage:
     type = "one time"
     def use(self):
         self.uses -= 1
-        if self.uses <= 0:
-            del self
     slots = 1
 
 class car_medkit:
@@ -60,8 +52,6 @@ class car_medkit:
     max_heal_amount = 70
     def use(self, heal_amount):
         self.uses -= heal_amount
-        if self.uses <= 0:
-            del self
     slots = 2
 
 class ai2:
@@ -74,8 +64,6 @@ class ai2:
     max_heal_amount = 50
     def use(self, heal_amount):
         self.uses -= heal_amount
-        if self.uses <= 0:
-            del self
     slots = 1
 
 class cms:
@@ -89,8 +77,6 @@ class cms:
     max_hp_loss = 0.75
     def use(self):
         self.uses -= 1 
-        if self.uses <= 0:
-            del self
     slots = 2
 
 class surv12:
@@ -104,6 +90,4 @@ class surv12:
     max_hp_loss = 0.40
     def use(self):
         self.uses -= 1 
-        if self.uses <= 0:
-            del self
     slots = 3
