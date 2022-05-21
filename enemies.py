@@ -1,6 +1,5 @@
 from inspect import Attribute, getattr_static, getmembers
 import random
-from tarfile import _Bz2ReadableFileobj
 from types import MethodDescriptorType
 from armors import *
 from guns import *
@@ -19,6 +18,8 @@ def calc_pen_chance(penetration, armor):
     else:
         return(0)
 
+
+
 class StandardHealth:
     
     def __init__(self):
@@ -30,6 +31,17 @@ class StandardHealth:
         self.rLeg = 65
         self.lLeg = 65
         self.overall = self.head + self.thorax + self.rArm + self.lArm + self.stomach + self.rLeg + self.lLeg
+
+        self.max_hp = {
+            "rArm": 60,
+            "lArm": 60,
+            "lLeg": 65,
+            "rLeg": 65,
+            "stomach": 70,
+            "head": 35,
+            "thorax": 85,
+            "overall": 440
+        }
 
         self.multipliers = {
             "rArm": 0.7,
@@ -63,7 +75,7 @@ class StandardHealth:
 
         for i in self.__dict__.keys():
 
-            invalid_attributes = ["overall", "multipliers", "equiped_gun", "equiped_armor", "status_effects", "is_player"]
+            invalid_attributes = ["overall", "multipliers", "equiped_gun", "equiped_armor", "status_effects", "is_player", "max_hp"]
             if i.startswith("__") or i in invalid_attributes:
                 pass
             else:
@@ -113,7 +125,7 @@ class StandardHealth:
                             self.equiped_armor.durability = 0
 
     def get_alive_limbs(self):
-        invalid_attributes = ["overall", "multipliers", "equiped_gun", "equiped_armor", "status_effects", "is_player"]
+        invalid_attributes = ["overall", "multipliers", "equiped_gun", "equiped_armor", "status_effects", "is_player", "max_hp"]
         alive_limbs = []
         for i in self.__dict__.keys():
             if i.startswith("__") or i in invalid_attributes:
@@ -155,19 +167,49 @@ class StandardHealth:
                 else:
                     print("Your enemy left behind a blood trail.")
     
-    def use_esmarch(self):
+    def use_esmarch(self, item):
         completed = False
         for index, item in enumerate(self.status_effects):
             if completed == False and item == "heavy_bleed":
                 self.status_effects.pop(index)
                 completed = True
+                item.use()
+                print("You patched up one of your heavy bleeds.")
 
-    def use_bandage(self):
+    def use_bandage(self, item):
         completed = False
-        for index, item in enumerate(self.status_effects):
-            if completed == False and item == "light_bleed":
+        for index, element in enumerate(self.status_effects):
+            if completed == False and element == "light_bleed":
                 self.status_effects.pop(index)
                 completed = True
+                item.use()
+                print("You patched up one of your light bleeds.")
+
+    def use_surgery(self, item, limb_to_operate):
+        if limb_to_operate in ["stomach", "rLeg", "lLeg", "rLeg", "lLeg"] and getattr(self, limb_to_operate) <= 0:
+            setattr(self, limb_to_operate, 1)
+            self.max_hp[limb_to_operate] *= random.randint(item.min_hp_loss, item.max_hp_loss)
+            item.use()
+            print(f"You performed surgery on your {limb_to_operate} and restored it to 1hp.")
+
+    def use_heal(self, bodypart_to_heal, item):
+        if getattr(self, bodypart_to_heal) > 0 and getattr(self, bodypart_to_heal) < self.max_hp[bodypart_to_heal]:
+            if getattr(self, bodypart_to_heal) + item.max_heal_amount <= self.max_hp[bodypart_to_heal]:
+                if item.uses <= item.max_heal_amount:
+                    setattr(self, bodypart_to_heal, getattr(self, bodypart_to_heal) + item.uses)
+                    print(f"You healed your {bodypart_to_heal} for {item.uses}.")
+                    item.use(item.uses)
+                else:
+                    setattr(self, bodypart_to_heal, getattr(self, bodypart_to_heal) + item.max_heal_amount)
+                    print(f"You healed your {bodypart_to_heal} for {item.max_heal_amount}.")
+                    item.use(item.max_heal_amount)
+            else:
+                used = self.max_hp[bodypart_to_heal] - getattr(self, bodypart_to_heal)
+                setattr(self, bodypart_to_heal, self.max_hp[bodypart_to_heal])
+                item.use(used)
+                print(f"You healed your {bodypart_to_heal} for {used}.")
+        else:
+            print("That limb is not able to be healed.")
 
 class PMC:
     def __init__(self, level, myself=False):

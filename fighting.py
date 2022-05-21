@@ -1,3 +1,6 @@
+from tabnanny import check
+
+from numpy import append
 from enemies import PMC, Scav, StandardHealth
 from myself import inv, myself
 import time
@@ -201,6 +204,12 @@ def fight(enemy, kindofencounter):
                 damage_to_deal = firingsequence(aimzone)
                 for i in damage_to_deal:          
                     enemy.health.dealdamage(i, inv["gun"], enemy.health.equiped_armor)
+                    check_for_bleed = random.random()
+                    if check_for_bleed <= 0.25:
+                        if check_for_bleed <= 0.125:
+                            enemy.health.status_effects.append("heavy_bleed")
+                        else:
+                            enemy.health.status_effects.append("light_bleed")
                 enemy.health.end_of_round()
                 myself.health.end_of_round()
                 turn = "them"
@@ -211,4 +220,5 @@ def fight(enemy, kindofencounter):
                 print("-1. Reposition     -")
                 print("-2. Hold angle     -")
                 print("--------------------")
+                print("WARNING: THIS OPTION CURRENTLY DOES NOTHING")
                 action = int(input("Input choice (1-2): "))
