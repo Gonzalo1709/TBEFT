@@ -7,7 +7,7 @@ level = 1
 inv = {
     "gun": mp5,
     "armor": active_armor("trooper", 100),
-    "items": [calok_b(), car_medkit(), army_bandage(), cms(), calok_b()]
+    "items": [calok_b(), army_bandage(), car_medkit(), cms(),]
 }
 
 def clean_inventory():   

@@ -7,7 +7,7 @@ class active_armor:
         for x, obj in inspect.getmembers(armors):
             if inspect.isclass(obj):
                 if obj.__name__ == type:
-                    self.durability = obj.maxDur * currdurability * 0.01
+                    self.durability = int(round(obj.maxDur * currdurability * 0.01, 0))
                     self.maxDur = obj.maxDur
                     self.name = obj.displayName
                     self.aclass = obj.aclass

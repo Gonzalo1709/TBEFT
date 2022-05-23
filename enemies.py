@@ -133,6 +133,16 @@ class StandardHealth:
             elif getattr(self, i) > 0:
                 alive_limbs.append(i)
         return(alive_limbs)
+
+    def get_surgery_compatible_limbs(self):
+        valid_attributes = ["rArm", "lArm", "stomach", "rLeg", "lLeg"]
+        surgery_compatible = []
+        for i in self.__dict__.keys():
+            if i not in valid_attributes:
+                pass
+            elif getattr(self, i) <= 0:
+                surgery_compatible.append(i)
+        return(surgery_compatible)
     
     def heavy_bleed(self):
         alive_limbs = self.get_alive_limbs()
@@ -226,7 +236,7 @@ class PMC:
 
 class Scav:
     scav_armors_type = ["paca", "zhuk", "thor", "nothing"]
-    scav_armors_durability = random.randint(50, 100)
+    scav_armors_durability = round(random.randint(50, 100), 0)
     def __init__(self):
         self.accmodpos = random.randint(-50, 0)
         self.accmodneg = self.accmodpos - random.randint(0, 50)
