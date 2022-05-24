@@ -198,7 +198,7 @@ class StandardHealth:
     def use_surgery(self, item, limb_to_operate):
         if limb_to_operate in ["stomach", "rLeg", "lLeg", "rLeg", "lLeg"] and getattr(self, limb_to_operate) <= 0:
             setattr(self, limb_to_operate, 1)
-            self.max_hp[limb_to_operate] *= random.randint(item.min_hp_loss, item.max_hp_loss)
+            self.max_hp[limb_to_operate] *= random.randint(int(item.min_hp_loss), int(item.max_hp_loss))
             item.use()
             print(f"You performed surgery on your {limb_to_operate} and restored it to 1hp.")
 

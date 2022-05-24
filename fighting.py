@@ -237,9 +237,9 @@ def fight(enemy, kindofencounter):
                             print("Which limb would you like to heal?: ")
                             for index, limb in enumerate(healable_limbs):
                                 limb_translations = {"head": "Head", "thorax": "Thorax", "rArm": "Right arm", "lArm": "Left arm", "stomach": "Stomach", "lLeg": "Left leg", "rLeg": "Right leg"}
-                                print(f"{index+1}. {limb_translations[limb]} ({getattr(myself.health), limb}/{myself.health.max_hp[limb]})")
+                                print(f"{index+1}. {limb_translations[limb]} ({getattr(myself.health, limb)}/{myself.health.max_hp[limb]})")
                             print("0. Go back.")
-                            limb_to_heal = int(input(f"Limb to heal (0-{len(healable_limbs)}):"))
+                            limb_to_heal = int(input(f"Limb to heal (0-{len(healable_limbs)}): "))
                             if limb_to_heal == 0:
                                 pass
                             elif limb_to_heal - 1> len(healable_limbs):
@@ -277,9 +277,9 @@ def fight(enemy, kindofencounter):
                             print("Which limb would you like to do surgery on?: ")
                             for index, limb in enumerate(healable_limbs):
                                 limb_translations = {"head": "Head", "thorax": "Thorax", "rArm": "Right arm", "lArm": "Left arm", "stomach": "Stomach", "lLeg": "Left leg", "rLeg": "Right leg"}
-                                print(f"{index+1}. {limb_translations[limb]} ({getattr(myself.health), limb}/{myself.health.max_hp[limb]})")
+                                print(f"{index+1}. {limb_translations[limb]} ({getattr(myself.health, limb)}/{myself.health.max_hp[limb]})")
                             print("0. Go back.")
-                            limb_to_heal = int(input(f"Limb to heal (0-{len(healable_limbs)}):"))
+                            limb_to_heal = int(input(f"Limb to heal (0-{len(healable_limbs)}): "))
                             if limb_to_heal == 0:
                                 pass
                             elif limb_to_heal - 1> len(healable_limbs):
