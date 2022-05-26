@@ -290,3 +290,16 @@ def fight(enemy, kindofencounter):
 
                     if actions == False:
                         print("The item you selected had no available actions.")
+            
+            elif choice == 4:
+                print("Option not yet implemented.")
+
+            else:
+                print("Not a valid option.")
+
+        elif turn == "them":
+            def enemyfire():
+                
+            enemy.health.getoverall()
+            if enemy.health.overall >= 330:
+                
